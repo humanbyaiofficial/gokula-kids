@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gokula Kids Universe - Krishna's Interactive Playground</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app-container">
+        <!-- Audio Synthesizer Toggle -->
+        <header id="main-header">
+            <div class="logo-container">
+                <span class="logo-peacock">🪶</span>
+                <h1 class="main-title">Gokula Kids Universe</h1>
+            </div>
+            <div class="header-controls">
+                <button id="sound-btn" class="control-btn" title="Toggle Sound">
+                    <span id="sound-icon">🔊</span>
+                </button>
+                <div class="score-display">
+                    <span class="score-icon">🌟</span>
+                    <span id="global-score">0</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Navigation Tabs -->
+        <nav id="main-nav">
+            <button class="nav-tab active" data-tab="home">🏡 Welcome</button>
+            <button class="nav-tab" data-tab="avatars">🧬 10 Avatars</button>
+            <button class="nav-tab" data-tab="maze">🧈 Butter Maze</button>
+            <button class="nav-tab" data-tab="art">🎨 Art Studio</button>
+            <button class="nav-tab" data-tab="pastimes">📚 Pastimes</button>
+            <button class="nav-tab" data-tab="badges">🏆 Badges</button>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main id="content-container">
+            <!-- 1. HOME SECTION -->
+            <section id="tab-home" class="tab-content active">
+                <div class="hero-card">
+                    <div class="hero-overlay">
+                        <h2>Welcome to Krishna's Playground!</h2>
+                        <p>Explore games, stories, puzzles, and art to learn about Krishna and His amazing pastimes in a fun way!</p>
+                        <div class="hero-buttons">
+                            <button class="play-btn" onclick="switchTab('maze')">Play Butter Maze</button>
+                            <button class="play-btn alt" onclick="switchTab('avatars')">Guess Avatars</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="features-grid">
+                    <div class="feature-card" onclick="switchTab('avatars')">
+                        <div class="feature-icon">🧬</div>
+                        <h3>Guess the 10 Avatars</h3>
+                        <p>Can you identify the ten incarnations (Dashavatara) of Lord Vishnu? Play the guessing game and read their stories!</p>
+                        <button class="feature-btn">Play Now</button>
+                    </div>
+                    <div class="feature-card" onclick="switchTab('maze')">
+                        <div class="feature-icon">🧈</div>
+                        <h3>Butter Maze</h3>
+                        <p>Help little Krishna find the butter pot! Steer Him through the maze, collect butter balls, and avoid obstacles.</p>
+                        <button class="feature-btn">Help Krishna</button>
+                    </div>
+                    <div class="feature-card" onclick="switchTab('art')">
+                        <div class="feature-icon">🎨</div>
+                        <h3>Art & Tracing Studio</h3>
+                        <p>Draw, trace, and color beautiful drawings of Krishna, Radha, and peacock feathers using our magical canvas!</p>
+                        <button class="feature-btn">Start Coloring</button>
+                    </div>
+                    <div class="feature-card" onclick="switchTab('pastimes')">
+                        <div class="feature-icon">📚</div>
+                        <h3>Krishna's Pastimes</h3>
+                        <p>Read wonderful stories about Govardhan Hill, the Kaliya serpent, and take quizzes to earn special stickers!</p>
+                        <button class="feature-btn">Read Stories</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 2. PLAYING/AVATARS SECTION -->
+            <section id="tab-avatars" class="tab-content">
+                <div class="game-container">
+                    <div class="game-header">
+                        <h2>Guess the Ten Avatars (Dashavatara)</h2>
+                        <p>Look at the silhouette and read the clue to guess which Avatar of Lord Vishnu this is!</p>
+                    </div>
+                    
+                    <div class="avatar-play-area">
+                        <div class="avatar-card-outer">
+                            <div class="avatar-card">
+                                <div class="avatar-silhouette-wrapper">
+                                    <div id="avatar-image-container" class="silhouette">
+                                        <!-- Silhouette SVG or Character generated here -->
+                                        <span id="avatar-emoji">🐟</span>
+                                    </div>
+                                </div>
+                                <div class="avatar-clue-box">
+                                    <h3>Clue:</h3>
+                                    <p id="avatar-clue">Loading clue...</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="avatar-options-box">
+                            <div class="avatar-progress">
+                                Avatar <span id="current-avatar-num">1</span> of 10
+                                <div class="progress-bar-bg">
+                                    <div id="avatar-progress-bar" style="width: 10%;"></div>
+                                </div>
+                            </div>
+                            <div id="avatar-options" class="options-grid">
+                                <!-- Options dynamically rendered here -->
+                            </div>
+                            <div id="avatar-feedback" class="feedback-message hidden">
+                                <p class="feedback-text"></p>
+                                <button id="next-avatar-btn" class="next-btn">Next Avatar ➔</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 3. MAZE SECTION -->
+            <section id="tab-maze" class="tab-content">
+                <div class="game-container">
+                    <div class="game-header">
+                        <h2>Help Krishna Reach the Butter Pot! 🍯</h2>
+                        <p>Use the Arrow keys or the on-screen buttons to guide little Krishna through the Vrindavan maze. Collect butter balls for extra points!</p>
+                    </div>
+
+                    <div class="maze-play-area">
+                        <div class="maze-canvas-container">
+                            <canvas id="maze-canvas" width="480" height="480"></canvas>
+                            <!-- Touch / Screen Controls for Mobile/Tablets -->
+                            <div id="maze-dpad">
+                                <button id="dpad-up" class="dpad-btn">▲</button>
+                                <div class="dpad-row">
+                                    <button id="dpad-left" class="dpad-btn">◀</button>
+                                    <button id="dpad-down" class="dpad-btn">▼</button>
+                                    <button id="dpad-right" class="dpad-btn">▶</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="maze-panel">
+                            <div class="level-stats">
+                                <div>Level: <span id="maze-level">1</span></div>
+                                <div>Butter Collected: <span id="maze-butter-collected">0</span>/5</div>
+                                <div>Score: <span id="maze-score">0</span></div>
+                            </div>
+                            <button id="restart-maze-btn" class="control-btn-secondary">Reset Level</button>
+                            
+                            <div class="maze-instructions">
+                                <h4>How to Play:</h4>
+                                <ul>
+                                    <li>🧑 Little Krishna starts at the top-left.</li>
+                                    <li>🍯 Reach the Butter Pot at the bottom-right.</li>
+                                    <li>🟡 Collect yellow butter balls for points!</li>
+                                    <li>Avoid Gopis/Monkeys blocking paths (Level 2+).</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 4. ART SECTION -->
+            <section id="tab-art" class="tab-content">
+                <div class="game-container">
+                    <div class="game-header">
+                        <h2>Drawing & Tracing Studio 🎨</h2>
+                        <p>Pick a template to trace or color, or start with a blank canvas to draw your own masterpiece!</p>
+                    </div>
+
+                    <div class="art-studio-layout">
+                        <!-- Canvas Controls Panel -->
+                        <div class="canvas-controls">
+                            <div class="control-group">
+                                <h4>Tools</h4>
+                                <div class="tool-buttons">
+                                    <button id="tool-brush" class="tool-btn active" title="Brush">🖌️</button>
+                                    <button id="tool-bucket" class="tool-btn" title="Paint Bucket (Fill)">🪣</button>
+                                    <button id="tool-eraser" class="tool-btn" title="Eraser">🧽</button>
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <h4>Brush Size</h4>
+                                <input type="range" id="brush-size" min="2" max="40" value="8">
+                                <span id="brush-size-display">8px</span>
+                            </div>
+
+                            <div class="control-group">
+                                <h4>Color Palette</h4>
+                                <div id="color-palette" class="color-palette">
+                                    <!-- Predefined child-friendly vibrant colors -->
+                                    <div class="color-swatch active" data-color="#000000" style="background-color: #000000;"></div>
+                                    <div class="color-swatch" data-color="#3498db" style="background-color: #3498db;"></div>
+                                    <div class="color-swatch" data-color="#2ecc71" style="background-color: #2ecc71;"></div>
+                                    <div class="color-swatch" data-color="#f1c40f" style="background-color: #f1c40f;"></div>
+                                    <div class="color-swatch" data-color="#e74c3c" style="background-color: #e74c3c;"></div>
+                                    <div class="color-swatch" data-color="#9b59b6" style="background-color: #9b59b6;"></div>
+                                    <div class="color-swatch" data-color="#e67e22" style="background-color: #e67e22;"></div>
+                                    <div class="color-swatch" data-color="#ff79c6" style="background-color: #ff79c6;"></div>
+                                    <div class="color-swatch" data-color="#ffffff" style="background-color: #ffffff; border: 1px solid #ccc;"></div>
+                                    <div class="color-swatch" data-color="#55efc4" style="background-color: #55efc4;"></div>
+                                    <div class="color-swatch" data-color="#ffeaa7" style="background-color: #ffeaa7;"></div>
+                                    <div class="color-swatch" data-color="#fd79a8" style="background-color: #fd79a8;"></div>
+                                </div>
+                                <input type="color" id="custom-color-picker" value="#3498db" title="Custom Color">
+                            </div>
+
+                            <div class="control-group">
+                                <h4>Actions</h4>
+                                <button id="clear-canvas-btn" class="action-btn clear-btn">Clear Canvas</button>
+                                <button id="save-canvas-btn" class="action-btn save-btn">Save Painting</button>
+                            </div>
+                        </div>
+
+                        <!-- Canvas Workspace -->
+                        <div class="canvas-workspace">
+                            <div class="canvas-container-outer">
+                                <canvas id="drawing-canvas" width="600" height="450"></canvas>
+                            </div>
+
+                            <div class="tracing-controls-bar">
+                                <label for="tracing-opacity">Tracing Template Opacity:</label>
+                                <input type="range" id="tracing-opacity" min="0" max="100" value="40">
+                                <span id="tracing-opacity-display">40%</span>
+                            </div>
+                        </div>
+
+                        <!-- Coloring Templates Panel -->
+                        <div class="templates-panel">
+                            <h4>Choose a Template</h4>
+                            <div class="templates-list">
+                                <div class="template-item active" data-template="blank">
+                                    <div class="template-preview blank-preview">📝</div>
+                                    <span>Blank Canvas</span>
+                                </div>
+                                <div class="template-item" data-template="krishna_butter">
+                                    <div class="template-preview image-preview" id="preview-butter">🍯</div>
+                                    <span>Krishna Eating Butter</span>
+                                </div>
+                                <div class="template-item" data-template="krishna_flute">
+                                    <div class="template-preview image-preview" id="preview-flute">🎶</div>
+                                    <span>Krishna & Flute</span>
+                                </div>
+                                <div class="template-item" data-template="peacock">
+                                    <div class="template-preview text-preview">🪶</div>
+                                    <span>Peacock Feather</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 5. PASTIMES SECTION -->
+            <section id="tab-pastimes" class="tab-content">
+                <div class="game-container">
+                    <div class="game-header">
+                        <h2>Krishna's Divine Pastimes 📖</h2>
+                        <p>Read these exciting pastimes from Vrindavan and take the quiz to test your knowledge!</p>
+                    </div>
+
+                    <div class="pastimes-layout">
+                        <!-- Pastime Sidebar -->
+                        <div class="pastimes-sidebar">
+                            <div class="pastime-nav-item active" data-story="govardhan">
+                                <span>🏔️ Govardhan Hill</span>
+                            </div>
+                            <div class="pastime-nav-item" data-story="kaliya">
+                                <span>🐍 Subduing Kaliya</span>
+                            </div>
+                            <div class="pastime-nav-item" data-story="butter_thief">
+                                <span>🧈 The Butter Thief</span>
+                            </div>
+                            <div class="pastime-nav-item" data-story="universe_mouth">
+                                <span>🌌 Universe in the Mouth</span>
+                            </div>
+                        </div>
+
+                        <!-- Story Content Area -->
+                        <div class="story-content-panel">
+                            <div id="story-viewer" class="story-viewer">
+                                <h2 id="story-title">Krishna Lifts Govardhan Hill</h2>
+                                <div class="story-illustration" id="story-illustration">
+                                    <!-- Dynamic elements or beautiful symbols -->
+                                    <span id="story-emoji" style="font-size: 80px;">🏔️</span>
+                                </div>
+                                <div class="story-text-container">
+                                    <p id="story-body">Loading story...</p>
+                                </div>
+                                <div class="story-actions">
+                                    <button id="start-story-quiz-btn" class="next-btn">Take Quiz! ➔</button>
+                                </div>
+                            </div>
+
+                            <!-- Quiz Sub-panel -->
+                            <div id="story-quiz-panel" class="story-quiz-panel hidden">
+                                <h3 id="quiz-question-title">Question 1</h3>
+                                <p id="quiz-question-text">Loading question...</p>
+                                <div id="quiz-options" class="quiz-options-list">
+                                    <!-- Dynamic option buttons -->
+                                </div>
+                                <div id="quiz-feedback" class="quiz-feedback-box hidden">
+                                    <p id="quiz-feedback-text">Feedback text</p>
+                                    <button id="next-quiz-question-btn" class="next-btn">Next Question ➔</button>
+                                </div>
+                            </div>
+
+                            <!-- Quiz Completed / Badges Won Screen -->
+                            <div id="quiz-completion-panel" class="quiz-completion-panel hidden">
+                                <div class="completion-crown">👑</div>
+                                <h2>Excellent!</h2>
+                                <p>You completed the quiz successfully and learned about this pastime of Krishna!</p>
+                                <div class="unlocked-badge-display">
+                                    <span id="unlocked-badge-icon" style="font-size: 60px;">🥇</span>
+                                    <h3 id="unlocked-badge-name">Badge Name</h3>
+                                    <p id="unlocked-badge-desc">Badge Description</p>
+                                </div>
+                                <button id="back-to-stories-btn" class="next-btn">Back to Stories</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 6. BADGES SECTION -->
+            <section id="tab-badges" class="tab-content">
+                <div class="game-container">
+                    <div class="game-header">
+                        <h2>Your Spiritual Badge Album 🏆</h2>
+                        <p>Complete quizzes, finish levels in the Butter Maze, identify avatars, and explore paintings to unlock all these wonderful badges!</p>
+                    </div>
+
+                    <div id="badges-grid" class="badges-grid">
+                        <!-- Badges list, locked by default and greyed out -->
+                        <div class="badge-card locked" id="badge-avatar_master">
+                            <div class="badge-emoji">🧬</div>
+                            <h4>Avatar Scholar</h4>
+                            <p>Correctly guess all 10 avatars of Lord Vishnu.</p>
+                            <span class="lock-status">🔒 Locked</span>
+                        </div>
+                        <div class="badge-card locked" id="badge-maze_easy">
+                            <div class="badge-emoji">🏃</div>
+                            <h4>Butter Runner</h4>
+                            <p>Complete Level 1 of the Butter Maze.</p>
+                            <span class="lock-status">🔒 Locked</span>
+                        </div>
+                        <div class="badge-card locked" id="badge-maze_hard">
+                            <div class="badge-emoji">🍯</div>
+                            <h4>Butter King</h4>
+                            <p>Complete Level 3 of the Butter Maze.</p>
+                            <span class="lock-status">🔒 Locked</span>
+                        </div>
+                        <div class="badge-card locked" id="badge-quiz_govardhan">
+                            <div class="badge-emoji">🏔️</div>
+                            <h4>Govardhan Hero</h4>
+                            <p>Complete the Govardhan Hill pastime quiz.</p>
+                            <span class="lock-status">🔒 Locked</span>
+                        </div>
+                        <div class="badge-card locked" id="badge-quiz_kaliya">
+                            <div class="badge-emoji">🐍</div>
+                            <h4>Kaliya Tamer</h4>
+                            <p>Complete the Subduing Kaliya pastime quiz.</p>
+                            <span class="lock-status">🔒 Locked</span>
+                        </div>
+                        <div class="badge-card locked" id="badge-quiz_butter_thief">
+                            <div class="badge-emoji">🧈</div>
+                            <h4>Makhan Friend</h4>
+                            <p>Complete the Butter Thief pastime quiz.</p>
+                            <span class="lock-status">🔒 Locked</span>
+                        </div>
+                        <div class="badge-card locked" id="badge-quiz_universe_mouth">
+                            <div class="badge-emoji">🌌</div>
+                            <h4>Cosmic Explorer</h4>
+                            <p>Complete the Universe in the Mouth pastime quiz.</p>
+                            <span class="lock-status">🔒 Locked</span>
+                        </div>
+                        <div class="badge-card locked" id="badge-artist">
+                            <div class="badge-emoji">🎨</div>
+                            <h4>Gokula Artist</h4>
+                            <p>Create and save a beautiful painting in the Art Studio.</p>
+                            <span class="lock-status">🔒 Locked</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer id="main-footer">
+            <p>Made with devotion for little Vaishnavas 🦚 Hare Krishna! 🌸</p>
+        </footer>
+    </div>
+
+    <!-- Core App Logic -->
+    <script src="app.js"></script>
+    <script src="js/avatars.js"></script>
+    <script src="js/maze.js"></script>
+    <script src="js/canvas.js"></script>
+    <script src="js/pastimes.js"></script>
+</body>
+</html>
